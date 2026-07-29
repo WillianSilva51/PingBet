@@ -1,0 +1,23 @@
+[project]
+name = "PingBet"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.13"
+dependencies = [
+    "aiogram>=3.30.0",
+    "alembic>=1.18.5",
+    "asyncpg>=0.31.0",
+    "loguru>=0.7.3",
+    "pydantic-settings>=2.14.2",
+    "python-dotenv>=1.2.2",
+    "redis[hiredis]>=8.0.1",
+    "sqlmodel>=0.0.39",
+]
+[project.optional-dependencies]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "ruff>=0.15.21",
+]

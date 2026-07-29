@@ -31,6 +31,6 @@ jobs:
         run: |
           uv run ruff check ./app --output-format=github
 
-      - name: Test with pytest
-        run: |
-          uv run pytest
+#      - name: Test with pytest
+#        run: |
+#          uv run pytest

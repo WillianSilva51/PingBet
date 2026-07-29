@@ -4,6 +4,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     PROJECT_NAME: str = "PingBet"
     VERSION: str = "0.1.0"
+    BOT_TOKEN: str
     DATABASE_URL: str
     REDIS_HOST: str
     REDIS_PORT: int

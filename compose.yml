@@ -1,0 +1,49 @@
+services:
+  postgres:
+    image: docker.io/postgres:18.1-alpine
+    container_name: pingbet-db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${DB_NAME:-pingbet}
+      POSTGRES_USER: ${DB_USER:-admin}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password123}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data:Z
+    healthcheck:
+      test:
+        [ "CMD-SHELL", "pg_isready -U ${DB_USER:-admin} -d ${DB_NAME:-pingbet}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - pingbet-network
+
+  redis:
+    image: docker.io/library/redis:8.4-alpine
+    container_name: pingbet-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data:Z
+    command: redis-server --requirepass ${REDIS_PASSWORD:-defaultpassword}
+    healthcheck:
+      test: [ "CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-defaultpassword}", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    networks:
+      - pingbet-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  pingbet-network:
+    name: pingbet-network
+    driver: bridge
